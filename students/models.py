@@ -14,10 +14,16 @@ class Student(models.Model):
     adress = models.CharField(verbose_name='Адрес', max_length=100)
     sex = models.CharField(verbose_name='Пол', choices=SEX)
 
+    class Meta:
+        verbose_name = 'Студент'
+        verbose_name_plural = "Студенты"
+
+    def __str__(self):
+        return f'{self.first_name} {self.second_name}'
+
 
 class School(models.Model):  #Школа
     name = models.CharField(verbose_name='Название школы', max_length=20)
-    grade = models.ForeignKey('Grade', verbose_name='Класс', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Школа'
@@ -31,6 +37,7 @@ class Grade(models.Model):  #Класс
     name = models.CharField(verbose_name='Класс', max_length=20)
     teacher = models.ForeignKey(Teacher, related_name='teacher', verbose_name='Учитель', on_delete=models.CASCADE)
     students = models.ManyToManyField(Student, related_name='students', verbose_name='Ученики', blank=True)
+    school = models.ForeignKey('School', on_delete=models.CASCADE, verbose_name='Школа')
 
     class Meta:
         verbose_name = 'Класс'

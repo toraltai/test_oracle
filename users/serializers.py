@@ -13,7 +13,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            'phone_number', 'name', 'password', 
+            'phone_number', 'username', 'password', 
             'password_confirm', 'grade', 'object'
         ]
 
@@ -41,4 +41,4 @@ class RegisterSerializer(serializers.ModelSerializer):
 class TeacherSerializer(serializers.ModelSerializer):
     class Meta:
         model = Teacher
-        fields = ['name', 'phone_number', 'grade', 'object']
+        fields = ['username', 'phone_number', 'grade', 'object']

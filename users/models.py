@@ -32,16 +32,16 @@ class UserManager(BaseUserManager):
 
 
 class Teacher(AbstractUser):
-    name = models.CharField(max_length=100, verbose_name='Имя', null=True)
+    username = models.CharField(max_length=50)
     phone_number = models.CharField(max_length=15, unique=True)
     grade = models.CharField(max_length=20, verbose_name='Класс')
     object = models.CharField(max_length=20, verbose_name='Предмет')
 
-    USERNAME_FIELD = ['name', 'phone_number']
+    USERNAME_FIELD ='phone_number'
     REQUIRED_FIELDS = []
 
     objects = UserManager()
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.username}'
     
