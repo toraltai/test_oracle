@@ -3,7 +3,7 @@
     2. docker compose build
     3. docker compose up
         После успешного контейнера нужно остановить контейнер, чтобы сделать миграции.
-    4. docker compose run web-app --rm sh -c "python3 manage.py migrate"
+    4. docker compose run --rm web-app sh -c "python3 manage.py migrate"
     5. docker compose up.
 
 # Для локального запуска:
