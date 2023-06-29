@@ -2,9 +2,11 @@
     1. клоним проект
     2. docker compose build
     3. docker compose up
-        После успешного контейнера нужно остановить контейнер, чтобы сделать миграции.
-    4. docker compose run --rm web-app sh -c "python3 manage.py migrate"
-    5. docker compose up.
+    4.После успешного контейнера нужно остановить контейнер, чтобы сделать миграции:
+        docker compose run --rm web-app sh -c "python3 manage.py migrate"
+    5. Создаем Супер пользователя:
+        docker compose run --rm web-app sh -c "python3 manage.py createsuperuser"
+    6. docker compose up -d
 
 # Для локального запуска:
     1. создаем виртуальное окружение:
