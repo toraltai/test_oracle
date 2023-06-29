@@ -1,6 +1,14 @@
 from django.db import models
 from users.models import Teacher
 
+from django.conf import settings
+from django.db.models.signals import (post_save)
+
+from django.dispatch import receiver
+from django.core.mail import send_mail
+
+
+
 SEX = [
     ('male', 'Мужской'),
     ('female', 'Женский')
@@ -10,7 +18,7 @@ class Student(models.Model):
     first_name = models.CharField(verbose_name='Имя', max_length=25)
     second_name = models.CharField(verbose_name='Фамилия', max_length=25)
     mail = models.EmailField(verbose_name='Почта', max_length=40)
-    grade = models.ForeignKey('Grade', on_delete=models.CASCADE)
+    grade = models.ForeignKey('Grade', on_delete=models.CASCADE, null=True)
     adress = models.CharField(verbose_name='Адрес', max_length=100)
     sex = models.CharField(verbose_name='Пол', choices=SEX)
 
@@ -21,9 +29,20 @@ class Student(models.Model):
     def __str__(self):
         return f'{self.first_name} {self.second_name}'
 
+@receiver(post_save, sender=Student)
+def student_created_signal(created, instance, *args, **kwargs):
+    if created:
+        send_mail(
+            "Test message",
+            f"Welcome {instance.first_name} {instance.second_name}.",
+            settings.EMAIL_HOST_USER,
+            [instance.mail]
+        )
+
 
 class School(models.Model):  #Школа
     name = models.CharField(verbose_name='Название школы', max_length=20)
+    grade = models.ForeignKey('Grade', verbose_name='Класс', on_delete=models.CASCADE, null=True)
 
     class Meta:
         verbose_name = 'Школа'
@@ -35,9 +54,8 @@ class School(models.Model):  #Школа
 
 class Grade(models.Model):  #Класс
     name = models.CharField(verbose_name='Класс', max_length=20)
-    teacher = models.ForeignKey(Teacher, related_name='teacher', verbose_name='Учитель', on_delete=models.CASCADE)
-    students = models.ManyToManyField(Student, related_name='students', verbose_name='Ученики', blank=True)
-    school = models.ForeignKey('School', on_delete=models.CASCADE, verbose_name='Школа')
+    teacher = models.ForeignKey(Teacher, related_name='teacher',verbose_name='Учитель', on_delete=models.CASCADE)
+    students = models.ForeignKey(Student, related_name='students', verbose_name='Ученики',on_delete=models.CASCADE, null=True)
 
     class Meta:
         verbose_name = 'Класс'

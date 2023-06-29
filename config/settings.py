@@ -27,6 +27,8 @@ INSTALLED_APPS = [
     'users',
 
     'rest_framework',
+    'django_filters',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -60,15 +62,21 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 AUTH_USER_MODEL = 'users.Teacher'
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER='flangkg@gmail.com'
+EMAIL_HOST_PASSWORD='zdfjlgecmpufwlhe'
+EMAIL_PORT = 587
+
+import os
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'oracle',
-        'USER': 'altai',
-        'PASSWORD': 1,
-        'HOST':'localhost',
-        'PORT': 5432
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASS'),
+        'HOST':os.environ.get('DB_HOST'),
     }
 }
 
@@ -113,3 +121,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
