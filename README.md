@@ -1,4 +1,4 @@
-Для запуска через Docker:
+# Для запуска через Docker:
     1. клоним проект
     2. docker compose build
     3. docker compose up
@@ -6,7 +6,7 @@
     4. docker compose run web-app --rm sh -c "python3 manage.py migrate"
     5. docker compose up.
 
-Для локального запуска:
+# Для локального запуска:
     1. создаем виртуальное окружение:
         python3 -m venv venv
 
