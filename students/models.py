@@ -1,13 +1,6 @@
 from django.db import models
 from users.models import Teacher
 
-from django.conf import settings
-from django.db.models.signals import (post_save)
-
-from django.dispatch import receiver
-from django.core.mail import send_mail
-
-
 
 SEX = [
     ('male', 'Мужской'),
@@ -28,16 +21,6 @@ class Student(models.Model):
 
     def __str__(self):
         return f'{self.first_name} {self.second_name}'
-
-@receiver(post_save, sender=Student)
-def student_created_signal(created, instance, *args, **kwargs):
-    if created:
-        send_mail(
-            "Test message",
-            f"Welcome {instance.first_name} {instance.second_name}.",
-            settings.EMAIL_HOST_USER,
-            [instance.mail]
-        )
 
 
 class School(models.Model):  #Школа
