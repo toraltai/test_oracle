@@ -29,4 +29,3 @@ class PostmanAPI(views.APIView):
         for student in students:
             message_handler(student.mail, student.first_name, student.second_name, request.data['text'])
         return response.Response('Postman mission done')
-    
