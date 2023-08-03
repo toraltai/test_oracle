@@ -64,9 +64,9 @@ AUTH_USER_MODEL = 'users.Teacher'
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER='flangkg@gmail.com'
-EMAIL_HOST_PASSWORD='zdfjlgecmpufwlhe'
-EMAIL_PORT = 587
+EMAIL_HOST_USER=''
+EMAIL_HOST_PASSWORD=''
+EMAIL_PORT = 0
 
 import os
 from decouple import config
